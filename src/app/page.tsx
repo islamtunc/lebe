@@ -4,7 +4,7 @@
 
 import React from 'react'
 
-function Page() {
+function page() {
   return (
     <div>
 
@@ -16,4 +16,4 @@ Selam Aleykum
   )
 }
 
-export default Page
+export default page
