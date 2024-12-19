@@ -50,7 +50,7 @@ export default function LoginForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Bernav</FormLabel>
               <FormControl>
                 <Input placeholder="Username" {...field} />
               </FormControl>
@@ -72,7 +72,7 @@ export default function LoginForm() {
           )}
         />
         <LoadingButton loading={isPending} type="submit" className="w-full">
-          Log in
+          Têketin
         </LoadingButton>
       </form>
     </Form>
