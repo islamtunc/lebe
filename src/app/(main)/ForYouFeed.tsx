@@ -1,3 +1,5 @@
+// Bismillahirrahmanirrahim 
+
 "use client";
 
 import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
@@ -38,7 +40,7 @@ export default function ForYouFeed() {
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
       <p className="text-center text-muted-foreground">
-        No one has posted anything yet.
+        Hê kesî tiştek parvenekirî ye
       </p>
     );
   }
@@ -46,7 +48,7 @@ export default function ForYouFeed() {
   if (status === "error") {
     return (
       <p className="text-center text-destructive">
-        An error occurred while loading posts.
+        Pirsgirek derket 
       </p>
     );
   }
