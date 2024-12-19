@@ -1,3 +1,5 @@
+//Bismillahirrahmanirrahim 
+
 "use client";
 
 import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
@@ -61,7 +63,7 @@ export default function Notifications() {
   if (status === "success" && !notifications.length && !hasNextPage) {
     return (
       <p className="text-center text-muted-foreground">
-        You don&apos;t have any notifications yet.
+        Hê tiştekî tune
       </p>
     );
   }
