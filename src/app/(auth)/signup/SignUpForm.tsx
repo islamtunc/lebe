@@ -50,7 +50,7 @@ export default function SignUpForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Bernav</FormLabel>
               <FormControl>
                 <Input placeholder="Username" {...field} />
               </FormControl>
@@ -85,7 +85,7 @@ export default function SignUpForm() {
           )}
         />
         <LoadingButton loading={isPending} type="submit" className="w-full">
-          Create account
+          Bibe Endam 
         </LoadingButton>
       </form>
     </Form>
