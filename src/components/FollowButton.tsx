@@ -1,3 +1,5 @@
+// Bismillahirrahmanirrahim 
+
 "use client";
 
 import useFollowerInfo from "@/hooks/useFollowerInfo";
@@ -58,7 +60,7 @@ export default function FollowButton({
       variant={data.isFollowedByUser ? "secondary" : "default"}
       onClick={() => mutate()}
     >
-      {data.isFollowedByUser ? "Unfollow" : "Follow"}
+      {data.isFollowedByUser ? "Neşopîne" : "Bişopîne"}
     </Button>
   );
 }
