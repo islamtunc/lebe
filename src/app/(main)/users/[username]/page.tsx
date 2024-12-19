@@ -58,7 +58,7 @@ export default async function Page({ params: { username } }: PageProps) {
   if (!loggedInUser) {
     return (
       <p className="text-destructive">
-        You&apos;re not authorized to view this page.
+        Hûn nikarin evê rûpelê bibînin
       </p>
     );
   }
@@ -107,10 +107,10 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
             <h1 className="text-3xl font-bold">{user.displayName}</h1>
             <div className="text-muted-foreground">@{user.username}</div>
           </div>
-          <div>Member since {formatDate(user.createdAt, "MMM d, yyyy")}</div>
+          <div>Endame ji {formatDate(user.createdAt, "MMM d, yyyy")} vir de</div>
           <div className="flex items-center gap-3">
             <span>
-              Posts:{" "}
+              Parvekirin:{" "}
               <span className="font-semibold">
                 {formatNumber(user._count.posts)}
               </span>
