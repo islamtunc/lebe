@@ -15,8 +15,8 @@ export default function Home() {
         <PostEditor />
         <Tabs defaultValue="for-you">
           <TabsList>
-            <TabsTrigger value="for-you">For you</TabsTrigger>
-            <TabsTrigger value="following">Following</TabsTrigger>
+            <TabsTrigger value="for-you">Ki Bo Te</TabsTrigger>
+            <TabsTrigger value="following">Tê şopandin</TabsTrigger>
           </TabsList>
           <TabsContent value="for-you">
             <ForYouFeed />
