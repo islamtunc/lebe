@@ -1,3 +1,5 @@
+// Bismillahirahmanirahim 
+
 "use client";
 
 import { useSession } from "@/app/(main)/SessionProvider";
@@ -43,7 +45,7 @@ export default function PostEditor() {
         italic: false,
       }),
       Placeholder.configure({
-        placeholder: "What's crack-a-lackin'?",
+        placeholder: "Selam aleykum,fermo...",
       }),
     ],
   });
@@ -114,7 +116,7 @@ export default function PostEditor() {
           disabled={!input.trim() || isUploading}
           className="min-w-20"
         >
-          Post
+          Parve bikin
         </LoadingButton>
       </div>
     </div>
