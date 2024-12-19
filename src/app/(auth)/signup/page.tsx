@@ -9,7 +9,7 @@ import Link from "next/link";
 import SignUpForm from "./SignUpForm";
 
 export const metadata: Metadata = {
-  title: "Sign Up",
+  title: "Bibe Endam",
 };
 
 export default function Page() {
@@ -20,14 +20,13 @@ export default function Page() {
           <div className="space-y-1 text-center">
             <h1 className="text-3xl font-bold">Sign up to bugbook</h1>
             <p className="text-muted-foreground">
-              A place where even <span className="italic">you</span> can find a
-              friend.
+              "Sernameya namê namê <span className="italic">Allah</span>, Bê nameye namê kêmî wî Wallah". Dîyarîyek ji ruhê Xanî ,Feqî û Mela re...
             </p>
           </div>
           <div className="space-y-5">
             <SignUpForm />
             <Link href="/login" className="block text-center hover:underline">
-              Already have an account? Log in
+              Jixwe tu endamî? Têketin 
             </Link>
           </div>
         </div>
