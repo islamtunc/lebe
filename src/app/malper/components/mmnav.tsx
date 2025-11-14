@@ -10,7 +10,6 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { useCart } from '../hooks/useCart';
 import { Modal } from "./mmodel"
 import { NavDropdown } from 'react-bootstrap';
 import SearchField from '@/components/SearchField';
@@ -18,8 +17,6 @@ import Vsrtn from './yasal/mmvsrtn';
 import Frtn  from './yasal/mmfrtn';
 import  Bkrhnr from './yasal/mmbikarhnr';
 function Mmmnavbar() {
-  const { items } = useCart();
-  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
