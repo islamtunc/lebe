@@ -1,5 +1,21 @@
 // Bismillahirrahmanirrahim 
 
+// Bismillahirrahmanirrahim 
+// Elhamdulillahi Rabbil Alamin
+// Essalatu vesselamu ala Resulina Muhammedin
+// Allah U Ekber, Allah U Ekber, Allah U Ekber, La ilahe illallah
+// Subhanallah, Elhamdulillah, Allahu Ekber
+// La ilahe illallah, Muhammedur Resulullah
+// La havle vela kuvvete illa billah
+// Astagfirullah al azim
+// La ilahe illallah, wahdahu la sharika lahu, lahul mulku wa lahul hamdu yuhyi wa yumit wa huwa ala kulli shay'in qadir
+// Seyyidena ve nebiyyena Muhammedun abduhu ve rasuluhu
+// Subhanallahi wa bihamdihi, subhanallahil azim
+// ELHAMDULILLAHI RABBIL 'ALAMIN
+// Allah U Ekber ve lillahi'l-hamd
+
+// Bismillahirrahmanirrahim 
+
 "use client";
 
 import { Loader2 } from "lucide-react";
@@ -27,18 +43,18 @@ export default function Chat() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const containerStyle = {
+  const containerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: isMobile ? 'column' : 'row',
     height: '100vh',
   };
 
-  const sidebarStyle = {
+  const sidebarStyle: React.CSSProperties = {
     width: isMobile ? '100%' : '250px',
   };
 
-  const chatContentStyle = {
-    flex: isMobile ? 'none' : 1,
+  const chatContentStyle: React.CSSProperties = {
+    flex: isMobile ? undefined : 1,
   };
 
   return (
