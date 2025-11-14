@@ -1,3 +1,10 @@
+//Bîsmîllahîrrahmanîrahîm
+//Elhamdulîllahîrabbulalemîn
+//Es selatu vesselamu ala rasulîna Muhammedin ve ala alihi ve sahbihi ecmaîn
+//SuphanAllahî velhamdulîllahî ve la ilahe illallah û vallahu ekber
+//LA ILAHE ILLALLAH MUHAMMEDEN RESULULLAH
+//Allahümme salli ala seyyidina Muhammedin ve ala alihi ve sahbihi ecmaîn
+//LA ILAHE ILLALLAHU VAHDEHU LA ŞERİKE LEHU, LEHÜL MÜLKÜ VE LEHÜL HAMDÜ YUHYİ VE YUMİTÜ VE HÜVE ALA KULLİ ŞEYİN KADİR
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
