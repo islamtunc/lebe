@@ -15,62 +15,82 @@
 // Allah U Ekber ve lillahi'l-hamd
 
 // Bismillahirrahmanirrahim 
-
 "use client";
 
-import { Loader2 } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
-import { Chat as StreamChat } from "stream-chat-react";
-import ChatChannel from "./ChatChannel";
-import ChatSidebar from "./ChatSidebar";
-import useInitializeChatClient from "./useInitializeChatClient";
+import React, { useEffect, useState } from "react";
+import { StreamChat } from "stream-chat";
+import {
+  Chat as StreamChatComponent,
+  Channel as ChatChannel,
+  Window,
+  MessageList,
+  MessageInput,
+} from "stream-chat-react";
+import "stream-chat-react/dist/css/index.css";
+
+import { DefaultGenerics } from "stream-chat"; // or your custom type
+
+// Replace with your actual API key
+const apiKey = "YOUR_STREAM_API_KEY";
+const userToken = "USER_TOKEN"; // Usually obtained from your backend
 
 export default function Chat() {
-  const chatClient = useInitializeChatClient();
-  const { resolvedTheme } = useTheme();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [chatClient, setChatClient] = useState<StreamChat<DefaultGenerics> | null>(null);
+  const [channel, setChannel] = useState<any>(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const client = StreamChat.getInstance<DefaultGenerics>(apiKey);
+
+    async function initChat() {
+      try {
+        await client.connectUser(
+          {
+            id: "user-id",
+            name: "User Name",
+            image: "https://getstream.io/random_png/?id=user-id",
+          },
+          userToken
+        );
+
+        const channel = client.channel("messaging", "general", {
+          name: "General",
+        });
+
+        await channel.watch();
+
+        setChatClient(client);
+        setChannel(channel);
+      } catch (error) {
+        console.error("Chat initialization error:", error);
+      }
+    }
+
+    initChat();
+
+    return () => {
+      client.disconnectUser();
     };
-
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
-    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const containerStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: isMobile ? 'column' : 'row',
-    height: '100vh',
-  };
+  // Render only if chatClient and channel are ready
+  if (!chatClient || !channel) return <div>Loading chat...</div>;
 
-  const sidebarStyle: React.CSSProperties = {
-    width: isMobile ? '100%' : '250px',
-  };
-
-  const chatContentStyle: React.CSSProperties = {
-    flex: isMobile ? undefined : 1,
+  const chatContainerStyle: React.CSSProperties = {
+    display: "flex",
+    flexDirection: "column",
+    height: "100vh",
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={sidebarStyle}>
-        <ChatSidebar open={false} onClose={function (): void {
-          throw new Error("Function not implemented.");
-        } } />
-      </div>
-      <div style={chatContentStyle}>
-        <StreamChat client={chatClient}>
-          <ChatChannel open={false} openSidebar={function (): void {
-            throw new Error("Function not implemented.");
-          } } />
-        </StreamChat>
-      </div>
+    <div style={chatContainerStyle}>
+      <StreamChatComponent client={chatClient} theme="messaging light">
+        <ChatChannel channel={channel} MessageInput={MessageInput}>
+          <Window>
+            <MessageList />
+            <MessageInput />
+          </Window>
+        </ChatChannel>
+      </StreamChatComponent>
     </div>
   );
 }
