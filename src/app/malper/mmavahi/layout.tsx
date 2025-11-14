@@ -1,4 +1,4 @@
-// Bismillahirahmanirahim
+// Bismillahirrahmanirrahim
 // Elhamdulillahi Rabbil Alamin
 // Essalatu vesselamu ala Resulina Muhammedin
 // Allah U Ekber, Allah U Ekber, Allah U Ekber, La ilahe illallah
@@ -12,28 +12,21 @@
 // ELHAMDULILLAHI RABBIL 'ALAMIN
 // Allah U Ekber ve lillahi'l-hamd
 
-"use server";
+"use client";
 
-import { lucia, validateRequest } from "@/auth";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import React from 'react'
+import { Card } from 'react-bootstrap';
 
-export async function logout() {
-  const { session } = await validateRequest();
-
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
-
-  await lucia.invalidateSession(session.id);
-
-  const sessionCookie = lucia.createBlankSessionCookie();
-
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes,
-  );
-
-  return redirect("/malper");
+export default function layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div>
+    
+      {children}
+      <Card style={{ marginTop: "20px", width: "100%", maxWidth: "700px", textAlign: "center", padding: "19px" }}>
+        <Card.Title>Diğer Yazılar</Card.Title>
+        <Card.Body>
+        </Card.Body>
+      </Card>
+    </div>
+  )
 }
