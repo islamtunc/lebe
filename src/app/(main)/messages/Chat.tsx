@@ -28,21 +28,22 @@ import {
 } from "stream-chat-react";
 import "stream-chat-react/dist/css/index.css";
 
-import { DefaultGenerics } from "stream-chat"; // or your custom type
+import { DefaultStreamChatGenerics } from "stream-chat"; // Default types
 
-// Replace with your actual API key
+// Replace with your actual Stream API key and user token
 const apiKey = "YOUR_STREAM_API_KEY";
-const userToken = "USER_TOKEN"; // Usually obtained from your backend
+const userToken = "USER_TOKEN";
 
 export default function Chat() {
-  const [chatClient, setChatClient] = useState<StreamChat<DefaultGenerics> | null>(null);
+  const [chatClient, setChatClient] = useState<StreamChat<DefaultStreamChatGenerics> | null>(null);
   const [channel, setChannel] = useState<any>(null);
 
   useEffect(() => {
-    const client = StreamChat.getInstance<DefaultGenerics>(apiKey);
+    const client = StreamChat.getInstance<DefaultStreamChatGenerics>(apiKey);
 
     async function initChat() {
       try {
+        // Connect the user
         await client.connectUser(
           {
             id: "user-id",
@@ -52,10 +53,10 @@ export default function Chat() {
           userToken
         );
 
+        // Create / watch a channel
         const channel = client.channel("messaging", "general", {
-          name: "General",
+          name: "General Chat",
         });
-
         await channel.watch();
 
         setChatClient(client);
@@ -72,7 +73,6 @@ export default function Chat() {
     };
   }, []);
 
-  // Render only if chatClient and channel are ready
   if (!chatClient || !channel) return <div>Loading chat...</div>;
 
   const chatContainerStyle: React.CSSProperties = {
@@ -84,7 +84,7 @@ export default function Chat() {
   return (
     <div style={chatContainerStyle}>
       <StreamChatComponent client={chatClient} theme="messaging light">
-        <ChatChannel channel={channel} MessageInput={MessageInput}>
+        <ChatChannel channel={channel}>
           <Window>
             <MessageList />
             <MessageInput />
