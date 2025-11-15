@@ -84,7 +84,7 @@ export default function LoginForm() {
           )}
         />
         <LoadingButton loading={isPending} type="submit" className="w-full">
-          Têketin
+           Giriş Yap
         </LoadingButton>
       </form>
     </Form>
