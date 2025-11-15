@@ -86,11 +86,7 @@ export async function GET(req: NextRequest) {
           googleId: googleUser.id,
         },
       });
-      await streamServerClient.upsertUser({
-        id: userId,
-        username,
-        name: username,
-      });
+   
     });
 
     const session = await lucia.createSession(userId, {});
