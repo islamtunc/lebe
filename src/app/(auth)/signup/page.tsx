@@ -21,7 +21,7 @@ import Link from "next/link";
 import SignUpForm from "./SignUpForm";
 
 export const metadata: Metadata = {
-  title: "Bibe Endam",
+  title: "Uye Ol - Patika",
 };
 
 export default function Page() {
