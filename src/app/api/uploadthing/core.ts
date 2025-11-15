@@ -55,12 +55,7 @@ export const fileRouter = {
             avatarUrl: newAvatarUrl,
           },
         }),
-        streamServerClient.partialUpdateUser({
-          id: metadata.user.id,
-          set: {
-            image: newAvatarUrl,
-          },
-        }),
+   
       ]);
 
       return { avatarUrl: newAvatarUrl };
