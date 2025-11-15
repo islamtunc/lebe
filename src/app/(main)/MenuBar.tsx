@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import { Bookmark, Home } from "lucide-react";
 import Link from "next/link";
-import NotificationsButton from "./NotificationsButton";
 
 interface MenuBarProps {
   className?: string;
