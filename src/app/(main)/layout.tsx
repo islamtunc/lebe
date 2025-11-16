@@ -12,13 +12,15 @@
 // ELHAMDULILLAHI RABBIL 'ALAMIN
 // Allah U Ekber ve lillahi'l-hamd
 
-
+// Bismillahirahmanirahim
+// ...
 
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
 import MenuBar from "./MenuBar";
 import Navbar from "./Navbar";
 import SessionProvider from "./SessionProvider";
+import { headers } from "next/headers";
 
 export default async function Layout({
   children,
@@ -27,7 +29,13 @@ export default async function Layout({
 }) {
   const session = await validateRequest();
 
-  if (!session.user) redirect("/malper");
+  // 🔥 Mevcut path'i al
+  const path = headers().get("x-next-url") || "";
+
+  // 🔥 Eğer route /admin ile başlıyorsa login zorunluluğunu kaldır
+  if (!path.startsWith("/admin") && !session.user) {
+    redirect("/malper");
+  }
 
   return (
     <SessionProvider value={session}>

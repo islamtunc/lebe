@@ -52,7 +52,7 @@ const Footer = () => (
             </Alert>
             <Alert>
             
-              <NavDropdown.Item >
+              <NavDropdown.Item href="/@admin" >
             
             Yonetim
               </NavDropdown.Item>
