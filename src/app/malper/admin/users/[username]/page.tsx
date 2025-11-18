@@ -13,8 +13,7 @@
 // Allah U Ekber ve lillahi'l-hamd
 
 
-
-import { validateRequest } from "@/auth";
+import { validateRequest } from "@/app/malper/auth"; 
 import FollowButton from "@/components/FollowButton";
 import FollowerCount from "@/components/FollowerCount";
 import Linkify from "@/components/Linkify";
@@ -35,7 +34,7 @@ interface PageProps {
 }
 
 const getUser = cache(async (username: string, loggedInUserId: string) => {
-  const user = await prisma.user.findFirst({
+  const admin = await prisma.admin.findFirst({
     where: {
       username: {
         equals: username,
@@ -45,27 +44,27 @@ const getUser = cache(async (username: string, loggedInUserId: string) => {
     select: getUserDataSelect(loggedInUserId),
   });
 
-  if (!user) notFound();
+  if (!admin) notFound();
 
-  return user;
+  return admin;
 });
 
 export async function generateMetadata({
   params: { username },
 }: PageProps): Promise<Metadata> {
-  const { user: loggedInUser } = await validateRequest();
+  const { admin: loggedInUser } = await validateRequest();
 
   if (!loggedInUser) return {};
 
-  const user = await getUser(username, loggedInUser.id);
+  const admin = await getUser(username, loggedInUser.id);
 
   return {
-    title: `${user.displayName} (@${user.username})`,
+    title: `${admin.displayName} (@${admin.username})`,
   };
 }
 
 export default async function Page({ params: { username } }: PageProps) {
-  const { user: loggedInUser } = await validateRequest();
+  const { admin: loggedInUser } = await validateRequest();
 
   if (!loggedInUser) {
     return (
@@ -75,18 +74,18 @@ export default async function Page({ params: { username } }: PageProps) {
     );
   }
 
-  const user = await getUser(username, loggedInUser.id);
+  const admin = await getUser(username, loggedInUser.id);
 
   return (
     <main className="flex w-full min-w-0 gap-5">
       <div className="w-full min-w-0 space-y-5">
-        <UserProfile user={user} loggedInUserId={loggedInUser.id} />
+        <UserProfile user={admin} loggedInUserId={loggedInUser.id} />
         <div className="rounded-2xl bg-card p-5 shadow-sm">
           <h2 className="text-center text-2xl font-bold">
-            {user.displayName}&apos;s posts
+            {admin.displayName}&apos;s posts
           </h2>
         </div>
-        <UserPosts userId={user.id} />
+        <UserPosts userId={admin.id} />
       </div>
       <TrendsSidebar />
     </main>
@@ -116,8 +115,8 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
       <div className="flex flex-wrap gap-3 sm:flex-nowrap">
         <div className="me-auto space-y-3">
           <div>
-            <h1 className="text-3xl font-bold">{user.displayName}</h1>
-            <div className="text-muted-foreground">@{user.username}</div>
+            <h1 className="text-3xl font-bold">{admin.displayName}</h1>
+            <div className="text-muted-foreground">@{admin.username}</div>
           </div>
           <div>Endame ji {formatDate(user.createdAt, "MMM d, yyyy")} vir de</div>
           <div className="flex items-center gap-3">
@@ -131,9 +130,9 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
           </div>
         </div>
         {user.id === loggedInUserId ? (
-          <EditProfileButton user={user} />
+          <EditProfileButton user={admin} />
         ) : (
-          <FollowButton userId={user.id} initialState={followerInfo} />
+          <FollowButton userId={admin.id} initialState={followerInfo} />
         )}
       </div>
       {user.bio && (

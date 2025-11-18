@@ -28,7 +28,7 @@ export async function login(
   try {
     const { username, password } = loginSchema.parse(credentials);
 
-    const existingUser = await prisma.user.findFirst({
+    const existingUser = await prisma.admin.findFirst({
       where: {
         username: {
           equals: username,
@@ -64,7 +64,7 @@ export async function login(
       sessionCookie.attributes,
     );
 
-    return redirect("/");
+    return redirect("/malper");
   } catch (error) {
     if (isRedirectError(error)) throw error;
     console.error(error);

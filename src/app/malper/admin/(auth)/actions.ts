@@ -14,7 +14,7 @@
 
 "use server";
 
-import { lucia, validateRequest } from "@/auth";
+import { lucia, validateRequest } from "@app/malper/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -35,5 +35,5 @@ export async function logout() {
     sessionCookie.attributes,
   );
 
-  return redirect("/login");
+  return redirect("/malpe");
 }

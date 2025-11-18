@@ -7,7 +7,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Bookmark, Home, User, ShoppingCart } from "lucide-react";
+import { Bookmark, Home, User, ShoppingCart, ShoppingBasketIcon } from "lucide-react";
 import Link from "next/link";
 import { Modal } from "./mmodel";
 
@@ -63,6 +63,20 @@ const MenuBar = ({ className }: MenuBarProps) => {
         >
           <Link href="/login" className="flex flex-col items-center md:flex-row md:gap-2">
             <User className="h-6 w-6 text-primary" aria-hidden />
+            <span className="sr-only md:not-sr-only md:inline ml-2">Profil</span>
+          </Link>
+        </Button>
+
+        <Button
+          variant="ghost"
+          className="flex flex-col items-center justify-center p-2 md:flex-row md:items-center md:justify-start md:gap-3 w-full"
+          title="Profil"
+          asChild
+        >
+          <Link href="/login" className="flex flex-col items-center md:flex-row md:gap-2">
+
+
+   <ShoppingBasketIcon className="h-6 w-6 text-primary" aria-hidden />  
             <span className="sr-only md:not-sr-only md:inline ml-2">Profil</span>
           </Link>
         </Button>

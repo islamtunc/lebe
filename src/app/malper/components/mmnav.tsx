@@ -39,7 +39,7 @@ function Mmmnavbar() {
             </NavDropdown>
 
             <NavDropdown title="Hediye Kutusu" id="basic-nav-dropdown-2">
-              <NavDropdown.Item href="/malper?/tab=dunya-kuresi">Dunya Kuresi</NavDropdown.Item>
+              <NavDropdown.Item href="/malper?/tab=dunya-kuresi">Dnya Kuresi</NavDropdown.Item>
               <NavDropdown.Item href="/malper?tab=kum-saati">Kum Saati</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/malper?tab=defter-kalem">

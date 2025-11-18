@@ -71,7 +71,7 @@ export function useUpdateProfileMutation() {
                 if (post.user.id === updatedUser.id) {
                   return {
                     ...post,
-                    user: {
+                    admin: {
                       ...updatedUser,
                       avatarUrl: newAvatarUrl || updatedUser.avatarUrl,
                     },
