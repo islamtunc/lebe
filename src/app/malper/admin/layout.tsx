@@ -13,6 +13,8 @@ import Navbar from "./Navbar";
 
 import 'bootstrap/dist/css/bootstrap.css'
 import { Row, Col, Alert } from "react-bootstrap";
+import { validateRequest } from "../auth";
+import { headers } from "next/headers";
 export default async function Layout({
   children,
 }: {
@@ -20,6 +22,20 @@ export default async function Layout({
 }) {
 
 
+
+
+
+
+
+    const session = await validateRequest();
+  
+    // 🔥 Mevcut path'i al
+    const path = headers().get("x-next-url") || "";
+  
+    // 🔥 Eğer route /admin ile başlıyorsa login zorunluluğunu kaldır
+    if (!path.startsWith("/admin") && !session.admin) {
+      redirect("/malper/admin/login");
+    }
   return (
       <div
         className="flex min-h-screen flex-col"

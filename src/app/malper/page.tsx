@@ -10,6 +10,13 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div>page</div>
+    <div>
+
+      <img
+        src="/m.jpeg"
+        alt="Under Construction"
+        style={{ width: '100%', height: 'auto', display: 'block', margin: '0 auto' }}
+      />
+    </div>
   )
 }
