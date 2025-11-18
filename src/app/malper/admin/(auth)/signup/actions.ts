@@ -39,7 +39,7 @@ export async function signUp(
 
     const userId = generateIdFromEntropySize(10);
 
-    const existingUsername = await prisma.user.findFirst({
+    const existingUsername = await prisma.admin.findFirst({
       where: {
         username: {
           equals: username,
@@ -54,7 +54,7 @@ export async function signUp(
       };
     }
 
-    const existingEmail = await prisma.user.findFirst({
+    const existingEmail = await prisma.admin.findFirst({
       where: {
         email: {
           equals: email,
@@ -90,7 +90,7 @@ export async function signUp(
       sessionCookie.attributes,
     );
 
-    return redirect("/");
+    return redirect("/malper");
   } catch (error) {
     if (isRedirectError(error)) throw error;
     console.error(error);

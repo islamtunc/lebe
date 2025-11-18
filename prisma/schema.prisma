@@ -230,9 +230,9 @@ enum MMediaType {
 model CComment {
   id      String @id @default(cuid())
   content String
-  userId  String
-  admin    Admin   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId  String
+  adminId  String
+  admin    Admin   @relation(fields: [Id], references: [id], onDelete: Cascade)
+  ppostId  String
   ppost    PPost   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
