@@ -1,9 +1,4 @@
-// Bismillahirrahmanirrahim 
-// Elhamdulillahirabbulalemin
-// Esselatu vesselamu ala rasulina Muhammedin ve ala alihi ve sahbihi ecmain
-// Suphanallah, Elhamdulillah, Allahu Ekber
-// Allah U Ekber, Allah U Ekber, Allah U Ekber, La ilahe illallah
-import { validateRequest } from "@/app/malper/auth";
+import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { getUserDataSelect } from "@/lib/types";
 
@@ -12,13 +7,13 @@ export async function GET(
   { params: { username } }: { params: { username: string } },
 ) {
   try {
-    const { admin: loggedInUser } = await validateRequest();
+    const { user: loggedInUser } = await validateRequest();
 
     if (!loggedInUser) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const admin = await prisma.admin.findFirst({
+    const user = await prisma.user.findFirst({
       where: {
         username: {
           equals: username,
@@ -28,11 +23,11 @@ export async function GET(
       select: getUserDataSelect(loggedInUser.id),
     });
 
-    if (!admin) {
+    if (!user) {
       return Response.json({ error: "User not found" }, { status: 404 });
     }
 
-    return Response.json(admin);
+    return Response.json(user);
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
