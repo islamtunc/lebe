@@ -160,15 +160,15 @@ model Admin {
   googleId              String?        @unique
   avatarUrl             String?
   bio                   String?
-  sessions              Session[]
-  posts                 Post[]
-  following             Follow[]       @relation("Following")
-  followers             Follow[]       @relation("Followers")
-  likes                 Like[]
-  bookmarks             Bookmark[]
-  comments              Comment[]
-  receivedNotifications Notification[] @relation("Recipient")
-  issuedNotifications   Notification[] @relation("Issuer")
+  ssessions              SSession[]
+  pposts                 PPost[]
+  ffollowing             FFollow[]       @relation("Following")
+  ffollowers             FFollow[]       @relation("Followers")
+  llikes                 LLike[]
+  bbookmarks             BBookmark[]
+  ccomments              CComment[]
+  receivedNotifications NNotification[] @relation("Recipient")
+  issuedNotifications   NNotification[] @relation("Issuer")
 
   createdAt DateTime @default(now())
 
@@ -179,7 +179,7 @@ model SSession {
   id        String   @id
   userId    String
   expiresAt DateTime
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin     Admin     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("ssessions")
 }
@@ -188,7 +188,7 @@ model FFollow {
   followerId  String
   follower    Admin   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
   followingId String
-  following   User   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+  following   Admin   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@unique([followerId, followingId])
   @@map("ffollows")
@@ -198,12 +198,12 @@ model PPost {
   id                  String         @id @default(cuid())
   content             String
   userId              String
-  user                Admin          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  attachments         Media[]
-  likes               Like[]
-  bookmarks           Bookmark[]
-  comments            Comment[]
-  linkedNotifications Notification[]
+  admin                Admin          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attachments         MMedia[]
+  llikes               LLike[]
+  bookmarks           BBookmark[]
+  comments            CComment[]
+  linkedNotifications NNotification[]
 
   createdAt DateTime @default(now())
 
@@ -213,8 +213,8 @@ model PPost {
 model MMedia {
   id     String    @id @default(cuid())
   postId String?
-  post   Post?     @relation(fields: [postId], references: [id], onDelete: SetNull)
-  type   MediaType
+  ppost  PPost?     @relation(fields: [postId], references: [id], onDelete: SetNull)
+  type   MMediaType
   url    String
 
   createdAt DateTime @default(now())
@@ -231,9 +231,9 @@ model CComment {
   id      String @id @default(cuid())
   content String
   userId  String
-  user    Admin   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin    Admin   @relation(fields: [userId], references: [id], onDelete: Cascade)
   postId  String
-  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  ppost    PPost   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
@@ -242,9 +242,9 @@ model CComment {
 
 model LLike {
   userId String
-  user   Admin  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin   Admin  @relation(fields: [userId], references: [id], onDelete: Cascade)
   postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  ppost   PPost   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId])
   @@map("llikes")
@@ -253,9 +253,9 @@ model LLike {
 model BBookmark {
   id     String @id @default(cuid())
   userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin   Admin   @relation(fields: [userId], references: [id], onDelete: Cascade)
   postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  ppost   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
@@ -270,7 +270,7 @@ model NNotification {
   issuerId    String
   issuer      User             @relation("Issuer", fields: [issuerId], references: [id], onDelete: Cascade)
   postId      String?
-  post        Post?            @relation(fields: [postId], references: [id], onDelete: Cascade)
+  ppost        PPost?            @relation(fields: [postId], references: [id], onDelete: Cascade)
   type        NotificationType
   read        Boolean          @default(false)
 
