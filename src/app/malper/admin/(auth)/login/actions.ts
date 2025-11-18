@@ -28,7 +28,7 @@ export async function login(
   try {
     const { username, password } = loginSchema.parse(credentials);
 
-    const existingUser = await prisma.admin.findFirst({
+    const existingUser = await prisma..findFirst({
       where: {
         username: {
           equals: username,

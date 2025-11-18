@@ -35,5 +35,5 @@ export async function logout() {
     sessionCookie.attributes,
   );
 
-  return redirect("/malpe");
+  return redirect("/malper");
 }
