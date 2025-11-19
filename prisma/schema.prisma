@@ -6,6 +6,8 @@
 // Subhanallah, Elhamdulillah, Allahu Ekber
 // Allah U Ekber ve lillahi'l-hamd
 
+
+
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
@@ -13,19 +15,27 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
 }
 
 model User {
-  id                    String         @id
-  username              String         @unique
-  displayName           String
-  email                 String?        @unique
-  passwordHash          String?
-  googleId              String?        @unique
-  avatarUrl             String?
-  bio                   String?
+  id          String         @id @default(cuid())
+  username    String         @unique
+  displayName String
+  email       String?        @unique
+  passwordHash String?
+  googleId    String?        @unique
+  avatarUrl   String?
+  bio         String?
+  role        Role           @default(USER)
+
   sessions              Session[]
   posts                 Post[]
   following             Follow[]       @relation("Following")
@@ -42,7 +52,7 @@ model User {
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(cuid())
   userId    String
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -146,140 +156,6 @@ model Notification {
 }
 
 enum NotificationType {
-  LIKE
-  FOLLOW
-  COMMENT
-}
-
-model Admin {
-  id                    String         @id
-  username              String         @unique
-  displayName           String
-  email                 String?        @unique
-  passwordHash          String?
-  googleId              String?        @unique
-  avatarUrl             String?
-  bio                   String?
-  ssessions              SSession[]
-  pposts                 PPost[]
-  ffollowing             FFollow[]       @relation("Following")
-  ffollowers             FFollow[]       @relation("Followers")
-  llikes                 LLike[]
-  bbookmarks             BBookmark[]
-  ccomments              CComment[]
-  receivedNotifications NNotification[] @relation("Recipient")
-  issuedNotifications   NNotification[] @relation("Issuer")
-
-  createdAt DateTime @default(now())
-
-  @@map("admins")
-}
-
-model SSession {
-  id        String   @id
-  userId    String
-  expiresAt DateTime
-  admin     Admin     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("ssessions")
-}
-
-model FFollow {
-  followerId  String
-  follower    Admin   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
-  followingId String
-  following   Admin   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
-
-  @@unique([followerId, followingId])
-  @@map("ffollows")
-}
-
-model PPost {
-  id                  String         @id @default(cuid())
-  content             String
-  userId              String
-  admin                Admin          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  attachments         MMedia[]
-  llikes               LLike[]
-  bookmarks           BBookmark[]
-  comments            CComment[]
-  linkedNotifications NNotification[]
-
-  createdAt DateTime @default(now())
-
-  @@map("pposts")
-}
-
-model MMedia {
-  id     String    @id @default(cuid())
-  postId String?
-  ppost  PPost?     @relation(fields: [postId], references: [id], onDelete: SetNull)
-  type   MMediaType
-  url    String
-
-  createdAt DateTime @default(now())
-
-  @@map("ppost_media")
-}
-
-enum MMediaType {
-  IMAGE
-  VIDEO
-}
-
-model CComment {
-  id      String @id @default(cuid())
-  content String
-  adminId  String
-  admin    Admin   @relation(fields: [Id], references: [id], onDelete: Cascade)
-  ppostId  String
-  ppost    PPost   @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-
-  @@map("ccomments")
-}
-
-model LLike {
-  userId String
-  admin   Admin  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId String
-  ppost   PPost   @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, postId])
-  @@map("llikes")
-}
-
-model BBookmark {
-  id     String @id @default(cuid())
-  userId String
-  admin   Admin   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId String
-  ppost   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-
-  @@unique([userId, postId])
-  @@map("bbookmarks")
-}
-
-model NNotification {
-  id          String           @id @default(cuid())
-  recipientId String
-  recipient   User             @relation("Recipient", fields: [recipientId], references: [id], onDelete: Cascade)
-  issuerId    String
-  issuer      User             @relation("Issuer", fields: [issuerId], references: [id], onDelete: Cascade)
-  postId      String?
-  ppost        PPost?            @relation(fields: [postId], references: [id], onDelete: Cascade)
-  type        NotificationType
-  read        Boolean          @default(false)
-
-  createdAt DateTime @default(now())
-
-  @@map("nnotifications")
-}
-
-enum NNotificationType {
   LIKE
   FOLLOW
   COMMENT
