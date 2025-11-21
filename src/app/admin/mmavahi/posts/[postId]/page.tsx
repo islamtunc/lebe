@@ -3,14 +3,17 @@
 // Es-selatu vesselamu ala rasulina Muhammedin ve ala alihi ve sahbihi, ecmain
 // Allah u Ekber, Allah u Ekber, Allah u Ekber, La ilahe illallah
 // La ilahe illAllah Muhammedur Rasulullah
-
+// SubhanAllah, Elhamdulillah, Allahu Ekber
+// Hasbunallahu ve ni'mel vekil
+// La havle ve la kuvvete illa billahil aliyyil azim
+// LA ILAHE ILLALLAH
 
 
 import { validateRequest } from "@/auth";
-import Linkify from "@/mcomponents/Linkify";
-import Post from "@/mcomponents/mmavahi/Post";
-import UserAvatar from "@/mcomponents/UserAvatar";
-import UserTooltip from "@/components/UserTooltip";
+import Linkify from "@/components/admin/Linkify";
+import Post from "@/components/admin/mmavahi/Post";
+import UserAvatar from "@/components/admin/UserAvatar";
+import UserTooltip from "@/components/admin/UserTooltip";
 import prisma from "@/lib/prisma";
 import { getPostDataInclude, UserData } from "@/lib/types";
 import { Loader2 } from "lucide-react";
@@ -24,7 +27,7 @@ interface PageProps {
 }
 
 const getPost = cache(async (postId: string, loggedInUserId: string) => {
-  const post = await prisma.mmavahi.findUnique({
+  const post = await prisma.post.findUnique({
     where: {
       id: postId,
     },
@@ -123,3 +126,11 @@ async function UserInfoSidebar({ user }: UserInfoSidebarProps) {
     </div>
   );
 }
+
+
+// Subhanallah, Elhamdulillah, Allahu Ekber, 
+// La ilahe illallah, Muhammeden Abduhu ve Resuluhu
+// La havle vela kuvvete illa billahil aliyyil azim
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin

@@ -1,4 +1,11 @@
 // Bismillahirahmanirahim 
+// ElHAMDULİLLAHİRABBULALEMİN
+// Es-selatu ve Es-selamu ala Resulina Muhammedin
+// Allah u Ekber, Allah u Ekber, Allah u Ekber, 
+// La ilahe illallah
+// SubhanAllah, Elhamdulillah, Allahu Ekber
+// Hasbunallahu ve ni'mel vekil
+// La havle ve la kuvvete illa billahil aliyyil azim
 
 
 
@@ -21,3 +28,13 @@ export default function Page() {
     </main>
   );
 }
+
+
+
+
+// Subhanallah, Elhamdulillah, Allahu Ekber, 
+// La ilahe illallah, Muhammeden Abduhu ve Resuluhu
+// La havle vela kuvvete illa billahil aliyyil azim
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin

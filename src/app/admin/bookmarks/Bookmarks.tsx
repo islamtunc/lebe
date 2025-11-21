@@ -15,9 +15,9 @@
 
 "use client";
 
-import InfiniteScrollContainer from "../components/InfiniteScrollContainer";
-import Post from "../components/posts/Post";
-import PostsLoadingSkeleton from "../components/posts/PostsLoadingSkeleton";
+import InfiniteScrollContainer from "../../../components/admin/InfiniteScrollContainer";
+import Post from "../../../components/admin/posts/Post";
+import PostsLoadingSkeleton from "../../../components/admin/posts/PostsLoadingSkeleton";
 import kyInstance from "@/lib/ky";
 import { PostsPage } from "@/lib/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -36,7 +36,7 @@ export default function Bookmarks() {
     queryFn: ({ pageParam }) =>
       kyInstance
         .get(
-          "/admins/bookmarked"
+          "/admin/bookmarks" +
           pageParam ? { searchParams: { cursor: pageParam } } : {},
         )
         .json<PostsPage>(),
