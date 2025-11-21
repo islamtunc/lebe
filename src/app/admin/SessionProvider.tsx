@@ -13,7 +13,10 @@ import { Session, User } from "lucia";
 import React, { createContext, useContext } from "react";
 
 interface SessionContext {
-  user: Admin;
+
+ 
+  user: User;
+  user.role: "admin";
   session: Session;
 }
 

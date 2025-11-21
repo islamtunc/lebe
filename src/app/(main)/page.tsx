@@ -12,33 +12,11 @@
 // ELHAMDULILLAHI RABBIL 'ALAMIN
 // Allah U Ekber ve lillahi'l-hamd
 
+import { requireRole } from "@/lib/middlew";
 
+export default async function Page() {
+  const user = await requireRole(["USER", "ADMIN"]);
+  if (!user) return <h1>Unauthorized</h1>;
 
-import PostEditor from "@/components/posts/editor/PostEditor";
-import TrendsSidebar from "@/components/TrendsSidebar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import FollowingFeed from "./FollowingFeed";
-import ForYouFeed from "./ForYouFeed";
-
-export default function Home() {
-  return (
-    <main className="flex w-full min-w-0 gap-5">
-      <div className="w-full min-w-0 space-y-5">
-        <PostEditor />
-        <Tabs defaultValue="for-you">
-          <TabsList>
-            <TabsTrigger value="for-you">Ji Bo Te</TabsTrigger>
-            <TabsTrigger value="following">Tê şopandin</TabsTrigger>
-          </TabsList>
-          <TabsContent value="for-you">
-            <ForYouFeed />
-          </TabsContent>
-          <TabsContent value="following">
-            <FollowingFeed />
-          </TabsContent>
-        </Tabs>
-      </div>
-      <TrendsSidebar />
-    </main>
-  );
+  return <h1>User Dashboard: {user.email}</h1>;
 }

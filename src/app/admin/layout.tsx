@@ -7,13 +7,14 @@
 // Subhanallah , Elhamdulillah, Allahu Ekber
 // Hasbunallahu ve ni'mel vekil
 // La havle ve la kuvvete illa billahil aliyyil azim
+// La ilahe illAllah u vahdehu la şerike leh
 
 import { redirect } from "next/navigation";
 import Navbar from "./Navbar";
 
 import 'bootstrap/dist/css/bootstrap.css'
 import { Row, Col, Alert } from "react-bootstrap";
-import { validateRequest } from "../auth";
+import { validateRequest } from "@/auth";
 import { headers } from "next/headers";
 export default async function Layout({
   children,
@@ -33,8 +34,8 @@ export default async function Layout({
     const path = headers().get("x-next-url") || "";
   
     // 🔥 Eğer route /admin ile başlıyorsa login zorunluluğunu kaldır
-    if (!path.startsWith("/admin") && !session.admin) {
-      redirect("/malper/admin/login");
+    if ( !session.user) {
+      redirect("/login");
     }
   return (
       <div
