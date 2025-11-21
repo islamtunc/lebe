@@ -6,20 +6,25 @@
 // La ilahe illallah Muhammedur Resulullah
 // Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
 // Estağfirulllah El-Azim
-import { requireRole } from "@/lib/middlew";
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin 
+import { validateRequest } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default async function Page() {
-  const user = await requireRole(["ADMIN"]);
+export default async function AdminPage() {
+  const { user } = await validateRequest();
 
-  if (!user) {
-    return <h1>Unauthorized</h1>;
-    // or redirect("/login")
+  if (!user || user.role !== "admin") {
+    return redirect("/not-authorized");
   }
 
   return (
     <div>
       <h1>Admin Panel</h1>
-      <p>Welcome: {user.email}</p>
     </div>
   );
 }
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin

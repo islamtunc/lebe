@@ -1,13 +1,15 @@
 // Bismillahirahmanirahim 
 // ElHAMDULİLLAHİRABBULALEMİN
-// Es-selatu ve Es-selamu ala Resulina Muhammedin ve ala alihi ve sahbihi ecmain
+// Es-selatu ve Es-selamu ala Resulina Muhammedin
 // Allah u Ekber, Allah u Ekber, Allah u Ekber, La ilahe illallah
 // SubhanAllah, Elhamdulillah, Allahu Ekber
 // Allah u Ekber, Allah u Ekber, Allah u Ekber, La ilahe illallah
 // Subhanallah , Elhamdulillah, Allahu Ekber
 // Hasbunallahu ve ni'mel vekil
 // La havle ve la kuvvete illa billahil aliyyil azim
-// La ilahe illAllah u vahdehu la şerike leh
+// La ilahe illAllah u vahdehu la şerike leh, lehul mülkü ve lehul hamdü yuhyi ve yumitu ve hüve ala külli şey'in kadir
+// Rabbi yessir ve la tu'assir Rabbi temmim bil hayr
+// Allahumme salli ala seyyidina Muhammedin ve ala alihi ve sahbihi ecmain
 
 import { redirect } from "next/navigation";
 import Navbar from "./Navbar";

@@ -3,12 +3,8 @@
 // Es-selatu ve Es-selamu ala Resulina Muhammedin ve ala alihi ve sahbihi ecmain
 // Allah u Ekber, Allah u Ekber, Allah u Ekber, La ilahe illallah
 // SubhanAllah, Elhamdulillah, Allahu Ekber
-// Allah u Ekber, Allah u Ekber, Allah u Ekber, La ilahe illallah
-// Subhanallah , Elhamdulillah, Allahu Ekber
 // Hasbunallahu ve ni'mel vekil
 // La havle ve la kuvvete illa billahil aliyyil azim
-
-
 
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Google } from "arctic";
@@ -33,16 +29,10 @@ export const lucia = new Lucia(adapter, {
       displayName: databaseUserAttributes.displayName,
       avatarUrl: databaseUserAttributes.avatarUrl,
       googleId: databaseUserAttributes.googleId,
+      role: databaseUserAttributes.role,   // <-- RBAC BURADA
     };
   },
 });
-
-declare module "lucia" {
-  interface Register {
-    Lucia: typeof lucia;
-    DatabaseUserAttributes: DatabaseUserAttributes;
-  }
-}
 
 interface DatabaseUserAttributes {
   id: string;
@@ -50,6 +40,14 @@ interface DatabaseUserAttributes {
   displayName: string;
   avatarUrl: string | null;
   googleId: string | null;
+  role: "admin" | "user"; // <-- TYPE EKLENDİ
+}
+
+declare module "lucia" {
+  interface Register {
+    Lucia: typeof lucia;
+    DatabaseUserAttributes: DatabaseUserAttributes;
+  }
 }
 
 export const google = new Google(
@@ -65,10 +63,7 @@ export const validateRequest = cache(
     const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
 
     if (!sessionId) {
-      return {
-        user: null,
-        session: null,
-      };
+      return { user: null, session: null };
     }
 
     const result = await lucia.validateSession(sessionId);
@@ -79,19 +74,21 @@ export const validateRequest = cache(
         cookies().set(
           sessionCookie.name,
           sessionCookie.value,
-          sessionCookie.attributes,
+          sessionCookie.attributes
         );
       }
+
       if (!result.session) {
         const sessionCookie = lucia.createBlankSessionCookie();
         cookies().set(
           sessionCookie.name,
           sessionCookie.value,
-          sessionCookie.attributes,
+          sessionCookie.attributes
         );
       }
     } catch {}
 
     return result;
-  },
+  }
 );
+// La ilahe illAllah u vahdehu la şerike leh, lehul mülkü ve lehul hamdü yuhyi ve yumitu ve hüve ala külli şey'in kadir

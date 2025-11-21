@@ -11,12 +11,47 @@
 // Subhanallahi wa bihamdihi, subhanallahil azim
 // ELHAMDULILLAHI RABBIL 'ALAMIN
 // Allah U Ekber ve lillahi'l-hamd
+// Bismillahirrahmanirahim
+// Elhamdulillahirabbulalemin
+// Es-selatu vesselamu ala rasulina Muhammedin ve ala alihi ve sahbihi ecmain
+// La havle ve la kuvvete illa billahil aliyyil azim
+// Allah u Ekber
+// La ilahe illallah Muhammedur Resulullah
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin 
+import { validateRequest } from "@/auth";
+import { redirect } from "next/navigation";
 
-import { requireRole } from "@/lib/middlew";
+export default async function AdminPage() {
+  const { user } = await validateRequest();
 
-export default async function Page() {
-  const user = await requireRole(["USER", "ADMIN"]);
-  if (!user) return <h1>Unauthorized</h1>;
+  if (!user || user.role !== "user") {
+    return redirect("/not-authorized");
+  }
 
-  return <h1>User Dashboard: {user.email}</h1>;
+  return (
+    <div>
+      <h1>Admin Panel</h1>
+    </div>
+  );
 }
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin
+// La havle ve la kuvvete illa billahil aliyyil azim
+// Allah u Ekber
+// La ilahe illallah Muhammedur Resulullah
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin
+// la havle ve la kuvvete illa billahil aliyyil azim
+// Allah u Ekber
+// La ilahe illallah Muhammedur Resulullah
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin
