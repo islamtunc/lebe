@@ -8,7 +8,7 @@
 // Estağfirulllah El-Azim
 // Elhmadulillah Elhamdulillah Elhamdulillah
 // Elhamdulillahirabbulalemin 
-import { validateRequest } from "@/lib/auth";
+import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
 
 export default async function AdminPage() {

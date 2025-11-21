@@ -10,8 +10,15 @@
 //  Global Types for User / Post / Comment
 //  With RBAC (ADMIN / USER)
 // =======================================
-
+// =======================================
+//  types.ts — Prisma Enum ve RBAC
+// =======================================
 import { Prisma } from "@prisma/client";
+
+// ================================
+// ROLE ENUM
+// ================================
+export type Role = "USER" | "ADMIN" | "MODERATOR";
 
 // ================================
 // USER SELECT
@@ -23,9 +30,6 @@ export function getUserDataSelect(loggedInUserId: string) {
     displayName: true,
     avatarUrl: true,
     bio: true,
-    role: true, // ADMIN / USER
-    createdAt: true,
-
     followers: {
       where: {
         followerId: loggedInUserId,
@@ -34,7 +38,6 @@ export function getUserDataSelect(loggedInUserId: string) {
         followerId: true,
       },
     },
-
     _count: {
       select: {
         posts: true,
@@ -44,43 +47,28 @@ export function getUserDataSelect(loggedInUserId: string) {
   } satisfies Prisma.UserSelect;
 }
 
+// UserData + role enum tipi
 export type UserData = Prisma.UserGetPayload<{
   select: ReturnType<typeof getUserDataSelect>;
-}>;
+}> & { role: Role };
 
 // ================================
 // POST INCLUDE
 // ================================
 export function getPostDataInclude(loggedInUserId: string) {
   return {
-    user: {
-      select: getUserDataSelect(loggedInUserId),
-    },
+    user: { select: getUserDataSelect(loggedInUserId) },
     attachments: true,
-
     likes: {
-      where: {
-        userId: loggedInUserId,
-      },
-      select: {
-        userId: true,
-      },
+      where: { userId: loggedInUserId },
+      select: { userId: true },
     },
-
     bookmarks: {
-      where: {
-        userId: loggedInUserId,
-      },
-      select: {
-        userId: true,
-      },
+      where: { userId: loggedInUserId },
+      select: { userId: true },
     },
-
     _count: {
-      select: {
-        likes: true,
-        comments: true,
-      },
+      select: { likes: true, comments: true },
     },
   } satisfies Prisma.PostInclude;
 }
@@ -99,9 +87,7 @@ export interface PostsPage {
 // ================================
 export function getCommentDataInclude(loggedInUserId: string) {
   return {
-    user: {
-      select: getUserDataSelect(loggedInUserId),
-    },
+    user: { select: getUserDataSelect(loggedInUserId) },
   } satisfies Prisma.CommentInclude;
 }
 
@@ -118,18 +104,8 @@ export interface CommentsPage {
 // NOTIFICATION INCLUDE
 // ================================
 export const notificationsInclude = {
-  issuer: {
-    select: {
-      username: true,
-      displayName: true,
-      avatarUrl: true,
-    },
-  },
-  post: {
-    select: {
-      content: true,
-    },
-  },
+  issuer: { select: { username: true, displayName: true, avatarUrl: true } },
+  post: { select: { content: true } },
 } satisfies Prisma.NotificationInclude;
 
 export type NotificationData = Prisma.NotificationGetPayload<{
@@ -142,7 +118,7 @@ export interface NotificationsPage {
 }
 
 // ================================
-// Info Types
+// INFO TYPES
 // ================================
 export interface FollowerInfo {
   followers: number;
@@ -165,6 +141,18 @@ export interface NotificationCountInfo {
 export interface MessageCountInfo {
   unreadCount: number;
 }
+
+// ================================
+// RBAC HELPER
+// ================================
+export function isAdmin(user: UserData) {
+  return user.role === "ADMIN";
+}
+
+export function isModerator(user: UserData) {
+  return user.role === "MODERATOR";
+}
+
 
 // Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
 // Estağfirulllah El-Azim
