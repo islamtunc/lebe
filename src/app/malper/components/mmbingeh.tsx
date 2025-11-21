@@ -52,7 +52,7 @@ const Footer = () => (
             </Alert>
             <Alert>
             
-              <NavDropdown.Item href="/malper/admin" >
+              <NavDropdown.Item href="/admin" >
             
             Yonetim
               </NavDropdown.Item>
@@ -99,3 +99,10 @@ const Footer = () => (
 );
 
 export default Footer;
+
+// Subhanallah, Elhamdulillah, Allahu Ekber, 
+// La ilahe illallah, Muhammaden Abduhu ve Resuluhu
+// La havle ve la kuvvete illa billahil aliyyil azim
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin
