@@ -6,12 +6,9 @@
 // La ilahe illallah, Muhammedur Resulullah
 // La havle vela kuvvete illa billah
 // Astagfirullah al azim
-// La ilahe illallahu wahdahu la sharika lahu, lahul mulku wa lahul hamdu yuhyi wa yumit wa huwa ala kulli shay'in qadir
-// Seyyidena ve nebiyyena Muhammedun abduhu ve rasuluhu
-// Subhanallahi wa bihamdihi, subhanallahil azim
-// ELHAMDULILLAHI RABBIL 'ALAMIN
-// Allah U Ekber ve lillahi'l-hamd
-
+// La ilahe illallahu wahdahu la sharika lahu,
+// lahul mulku wa lahul hamdu yuhyi wa yumit
+// wa huwa ala kulli shay'in qadir
 
 "use server";
 
@@ -25,77 +22,74 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function signUp(
-  credentials: SignUpValues,
-): Promise<{ error: string }> {
+  credentials: SignUpValues
+): Promise<{ error: string | null }> {
   try {
     const { username, email, password } = signUpSchema.parse(credentials);
 
-    const passwordHash = await hash(password, {
-      memoryCost: 19456,
-      timeCost: 2,
-      outputLen: 32,
-      parallelism: 1,
-    });
+    // ✔ password hash — güvenli default parametreler
+    const passwordHash = await hash(password);
 
     const userId = generateIdFromEntropySize(10);
 
+    // ✔ username kontrolü
     const existingUsername = await prisma.user.findFirst({
       where: {
-        username: {
-          equals: username,
-          mode: "insensitive",
-        },
+        username: { equals: username, mode: "insensitive" },
       },
     });
 
     if (existingUsername) {
-      return {
-        error: "Username already taken",
-      };
+      return { error: "Username already taken" };
     }
 
+    // ✔ email kontrolü
     const existingEmail = await prisma.user.findFirst({
       where: {
-        email: {
-          equals: email,
-          mode: "insensitive",
-        },
+        email: { equals: email, mode: "insensitive" },
       },
     });
 
     if (existingEmail) {
-      return {
-        error: "Email already taken",
-      };
+      return { error: "Email already taken" };
     }
 
-    await prisma.$transaction(async (tx) => {
-      await tx.user.create({
-        data: {
-          id: userId,
-          username,
-          displayName: username,
-          email,
-          passwordHash,
-        },
-      });
-    
+    // ✔ kullanıcı oluşturma (RBAC: role default → “user”)
+    await prisma.user.create({
+      data: {
+        id: userId,
+        username,
+        displayName: username,
+        email,
+        passwordHash,
+        role: "user", // <-- RBAC BURADA BAŞLIYOR
+      },
     });
 
+    // ✔ session oluştur
     const session = await lucia.createSession(userId, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes,
-    );
+    const cookie = lucia.createSessionCookie(session.id);
+
+    cookies().set(cookie.name, cookie.value, cookie.attributes);
 
     return redirect("/");
   } catch (error) {
     if (isRedirectError(error)) throw error;
-    console.error(error);
-    return {
-      error: "Something went wrong. Please try again.",
-    };
+
+    console.error("[SIGNUP_ERROR]", error);
+    return { error: "Something went wrong. Please try again." };
   }
 }
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin
+// La havle ve la kuvvete illa billahil aliyyil azim
+// Allah u Ekber
+// La ilahe illallah Muhammedur Resulullah
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin
+// La havle ve la kuvvete illa billahil aliyyil azim
+// Allah u Ekber

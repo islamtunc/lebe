@@ -3,16 +3,19 @@
 // Es-selatu ve Es-selamu ala Resulina Muhammedin ve ala alihi ve sahbihi ecmain
 // Allah u Ekber, Allah u Ekber, Allah u Ekber, La ilahe illallah
 // SubhanAllah, Elhamdulillah, Allahu Ekber
-// Allah u Ekber, Allah u Ekber, Allah u Ekber, La ilahe illallah
-// Subhanallah , Elhamdulillah, Allahu Ekber
 // Hasbunallahu ve ni'mel vekil
 // La havle ve la kuvvete illa billahil aliyyil azim
 
-
-
+// =======================================
+//  Global Types for User / Post / Comment
+//  With RBAC (ADMIN / USER)
+// =======================================
 
 import { Prisma } from "@prisma/client";
 
+// ================================
+// USER SELECT
+// ================================
 export function getUserDataSelect(loggedInUserId: string) {
   return {
     id: true,
@@ -20,7 +23,9 @@ export function getUserDataSelect(loggedInUserId: string) {
     displayName: true,
     avatarUrl: true,
     bio: true,
+    role: true, // ADMIN / USER
     createdAt: true,
+
     followers: {
       where: {
         followerId: loggedInUserId,
@@ -29,6 +34,7 @@ export function getUserDataSelect(loggedInUserId: string) {
         followerId: true,
       },
     },
+
     _count: {
       select: {
         posts: true,
@@ -42,12 +48,16 @@ export type UserData = Prisma.UserGetPayload<{
   select: ReturnType<typeof getUserDataSelect>;
 }>;
 
+// ================================
+// POST INCLUDE
+// ================================
 export function getPostDataInclude(loggedInUserId: string) {
   return {
     user: {
       select: getUserDataSelect(loggedInUserId),
     },
     attachments: true,
+
     likes: {
       where: {
         userId: loggedInUserId,
@@ -56,6 +66,7 @@ export function getPostDataInclude(loggedInUserId: string) {
         userId: true,
       },
     },
+
     bookmarks: {
       where: {
         userId: loggedInUserId,
@@ -64,6 +75,7 @@ export function getPostDataInclude(loggedInUserId: string) {
         userId: true,
       },
     },
+
     _count: {
       select: {
         likes: true,
@@ -82,6 +94,9 @@ export interface PostsPage {
   nextCursor: string | null;
 }
 
+// ================================
+// COMMENT INCLUDE
+// ================================
 export function getCommentDataInclude(loggedInUserId: string) {
   return {
     user: {
@@ -99,6 +114,9 @@ export interface CommentsPage {
   previousCursor: string | null;
 }
 
+// ================================
+// NOTIFICATION INCLUDE
+// ================================
 export const notificationsInclude = {
   issuer: {
     select: {
@@ -123,6 +141,9 @@ export interface NotificationsPage {
   nextCursor: string | null;
 }
 
+// ================================
+// Info Types
+// ================================
 export interface FollowerInfo {
   followers: number;
   isFollowedByUser: boolean;
@@ -145,138 +166,7 @@ export interface MessageCountInfo {
   unreadCount: number;
 }
 
-
-
-
-
-export function getAdminDataSelect(loggedInUserId: string) {
-  return {
-    id: true,
-    username: true,
-    displayName: true,
-    avatarUrl: true,
-    bio: true,
-    createdAt: true,
-    followers: {
-      where: {
-        followerId: loggedInUserId,
-      },
-      select: {
-        followerId: true,
-      },
-    },
-    _count: {
-      select: {
-        posts: true,
-        followers: true,
-      },
-    },
-  } satisfies Prisma.AdminSelect;
-}
-
-export type AdminData = Prisma.UserGetPayload<{
-  select: ReturnType<typeof getUserDataSelect>;
-}>;
-
-export function getPPostDataInclude(loggedInUserId: string) {
-  return {
-    user: {
-      select: getUserDataSelect(loggedInUserId),
-    },
-    attachments: true,
-    likes: {
-      where: {
-        userId: loggedInUserId,
-      },
-      select: {
-        userId: true,
-      },
-    },
-    bookmarks: {
-      where: {
-        userId: loggedInUserId,
-      },
-      select: {
-        userId: true,
-      },
-    },
-    _count: {
-      select: {
-        likes: true,
-        comments: true,
-      },
-    },
-  } satisfies Prisma.PPostInclude;
-}
-
-export type PPostData = Prisma.PostGetPayload<{
-  include: ReturnType<typeof getPostDataInclude>;
-}>;
-
-export interface PostsPage {
-  posts: PostData[];
-  nextCursor: string | null;
-}
-
-export function getCCommentDataInclude(loggedInUserId: string) {
-  return {
-    user: {
-      select: getUserDataSelect(loggedInUserId),
-    },
-  } satisfies Prisma.CCommentInclude;
-}
-
-export type CCommentData = Prisma.CommentGetPayload<{
-  include: ReturnType<typeof getCommentDataInclude>;
-}>;
-
-export interface CommentsPage {
-  comments: CommentData[];
-  previousCursor: string | null;
-}
-
-export const nnotificationsInclude = {
-  issuer: {
-    select: {
-      username: true,
-      displayName: true,
-      avatarUrl: true,
-    },
-  },
-  post: {
-    select: {
-      content: true,
-    },
-  },
-} satisfies Prisma.NNotificationInclude;
-
-export type NNotificationData = Prisma.NotificationGetPayload<{
-  include: typeof notificationsInclude;
-}>;
-
-export interface NNotificationsPage {
-  notifications: NotificationData[];
-  nextCursor: string | null;
-}
-
-export interface FFollowerInfo {
-  followers: number;
-  isFollowedByUser: boolean;
-}
-
-export interface LLikeInfo {
-  likes: number;
-  isLikedByUser: boolean;
-}
-
-export interface BBookmarkInfo {
-  isBookmarkedByUser: boolean;
-}
-
-export interface NNotificationCountInfo {
-  unreadCount: number;
-}
-
-export interface MMessageCountInfo {
-  unreadCount: number;
-}
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin

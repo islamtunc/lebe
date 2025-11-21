@@ -6,7 +6,7 @@
 // La ilahe illallah, Muhammedur Resulullah
 // La havle vela kuvvete illa billah
 // Astagfirullah al azim
-// La ilahe illallah, wahdahu la sharika lahu, lahul mulku wa lahul hamdu yuhyi wa yumit wa huwa ala kulli shay'in qadir
+// La ilahe illallahu wahdahu la sharika lahu, lahul mulku wa lahul hamdu yuhyi wa yumit wa huwa ala kulli shay'in qadir
 // Seyyidena ve nebiyyena Muhammedun abduhu ve rasuluhu
 // Subhanallahi wa bihamdihi, subhanallahil azim
 // ELHAMDULILLAHI RABBIL 'ALAMIN
@@ -24,7 +24,20 @@ export default async function Layout({
 }) {
   const { user } = await validateRequest();
 
-  if (user) redirect("/");
+  // Kullanıcı giriş yaptıysa ana sayfaya gönder
+  if (user) {
+    redirect("/");
+  }
 
+  // Ziyaretçi ise sayfayı göster
   return <>{children}</>;
 }
+// Elhamdulillahirabbulalemin
+// Es-selatu vesselamu ala rasulina Muhammedin ve ala alihi ve sahbihi ecmain
+// La havle ve la kuvvete illa billahil aliyyil azim
+// Allah u Ekber
+// La ilahe illallah Muhammedur Resulullah
+// Subhanallah, Elhamdulillah, Allahu Ekber, La ilahe illallah
+// Estağfirulllah El-Azim
+// Elhmadulillah Elhamdulillah Elhamdulillah
+// Elhamdulillahirabbulalemin

@@ -6,11 +6,9 @@
 // La ilahe illallah, Muhammedur Resulullah
 // La havle vela kuvvete illa billah
 // Astagfirullah al azim
-// La ilahe illallah, wahdahu la sharika lahu, lahul mulku wa lahul hamdu yuhyi wa yumit wa huwa ala kulli shay'in qadir
-// Seyyidena ve nebiyyena Muhammedun abduhu ve rasuluhu
-// Subhanallahi wa bihamdihi, subhanallahil azim
-// ELHAMDULILLAHI RABBIL 'ALAMIN
-// Allah U Ekber ve lillahi'l-hamd
+// La ilahe illallah, wahdahu la sharika lahu,
+// lahul mulku wa lahul hamdu yuhyi wa yumit
+// wa huwa ala kulli shay'in qadir
 
 "use server";
 
@@ -22,18 +20,32 @@ export async function logout() {
   const { session } = await validateRequest();
 
   if (!session) {
-    throw new Error("Unauthorized");
+    // Kullanıcı zaten logout ise yine login sayfasına döndür
+    return redirect("/login");
   }
 
+  // 1. Session DB'den silinir
   await lucia.invalidateSession(session.id);
 
-  const sessionCookie = lucia.createBlankSessionCookie();
+  // 2. Tarayıcıdaki cookie temizlenir
+  const blank = lucia.createBlankSessionCookie();
 
   cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes,
+    blank.name,
+    blank.value,
+    blank.attributes
   );
 
-  return redirect("/login");
+  // 3. login sayfasına yönlendirilir
+  redirect("/login");
 }
+// La ilahe illallahu wahdahu la sharika lahu,
+// lahul mulku wa lahul hamdu yuhyi wa yumit
+// wa huwa ala kulli shay'in qadir
+// Astagfirullah al azim
+// La havle vela kuvvete illa billah
+// La ilahe illallah, Muhammedur Resulullah
+// Subhanallah, Elhamdulillah, Allahu Ekber
+// Allah U Ekber, Allah U Ekber, Allah U Ekber, La ilahe illallah
+// Essalatu vesselamu ala Resulina Muhammedin
+// Elhamdulillahi Rabbil Alamin
