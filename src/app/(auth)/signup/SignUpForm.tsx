@@ -2,15 +2,7 @@
 // Elhamdulillahi Rabbil Alamin
 // Essalatu vesselamu ala Resulina Muhammedin
 // Allah U Ekber, Allah U Ekber, Allah U Ekber, La ilahe illallah
-// Subhanallah, Elhamdulillah, Allahu Ekber
-// La ilahe illallah, Muhammedur Resulullah
-// La havle vela kuvvete illa billah
-// Astagfirullah al azim
-// La ilahe illallah, wahdahu la sharika lahu, lahul mulku wa lahul hamdu yuhyi wa yumit wa huwa ala kulli shay'in qadir
-// Seyyidena ve nebiyyena Muhammedun abduhu ve rasuluhu
-// Subhanallahi wa bihamdihi, subhanallahil azim
-// ELHAMDULILLAHI RABBIL 'ALAMIN
-// Allah U Ekber ve lillahi'l-hamd
+// SubhanAllah, Elhamdulillah, Allahu Ekber
 
 "use client";
 
@@ -33,7 +25,6 @@ import { signUp } from "./actions";
 
 export default function SignUpForm() {
   const [error, setError] = useState<string>();
-
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<SignUpValues>({
@@ -48,21 +39,32 @@ export default function SignUpForm() {
   async function onSubmit(values: SignUpValues) {
     setError(undefined);
     startTransition(async () => {
-      const { error } = await signUp(values);
-      if (error) setError(error);
+      try {
+        const { error } = await signUp(values);
+
+        if (error) setError(error);
+      } catch (err) {
+        console.error(err);
+        setError("Bir hata oluştu. Lütfen tekrar deneyin.");
+      }
     });
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-3"
+        noValidate
+      >
         {error && <p className="text-center text-destructive">{error}</p>}
+
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Kullanici Adi</FormLabel>
+              <FormLabel>Kullanıcı Adı</FormLabel>
               <FormControl>
                 <Input placeholder="Username" {...field} />
               </FormControl>
@@ -70,6 +72,7 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="email"
@@ -83,12 +86,13 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Şifre</FormLabel>
               <FormControl>
                 <PasswordInput placeholder="Password" {...field} />
               </FormControl>
@@ -96,10 +100,17 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
+
         <LoadingButton loading={isPending} type="submit" className="w-full">
-          Bibe Endam 
+          Bibe Endam
         </LoadingButton>
       </form>
     </Form>
   );
 }
+// La ilahe illallah, Muhammedur Resulullah
+// La havle vela kuvvete illa billah
+// Astagfirullah al azim
+// La ilahe illallahu wahdahu la sharika lahu,
+// lahul mulku wa lahul hamdu yuhyi wa yumit
+// wa huwa ala kulli shay'in qadir
