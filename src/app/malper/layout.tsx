@@ -14,6 +14,7 @@ import Navbar from "./components/mmnav";
 import { Row, Col, Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from "./components/mmbingeh";
+import ContactForm from "./components/mmfrm";
 
 
 export default function Layout({
@@ -32,7 +33,7 @@ export default function Layout({
 
 
 
-
+             <ContactForm />
             <Footer />
           </Col>
           <Col md={3}>
